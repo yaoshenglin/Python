@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		1459A7012048FACB0040FD10 /* PLA.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = PLA.py; sourceTree = "<group>"; };
 		14EC69772047F92C00D5F887 /* AppMain.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = AppMain.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -15,6 +16,7 @@
 			isa = PBXGroup;
 			children = (
 				14EC69772047F92C00D5F887 /* AppMain.py */,
+				1459A7012048FACB0040FD10 /* PLA.py */,
 			);
 			sourceTree = "<group>";
 		};
