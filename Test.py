@@ -21,13 +21,14 @@ def CopyFile(srcfile,dstfile):
             os.makedirs(fpath)                #如果不存在，则创建路径
         shutil.copy(srcfile,dstfile)          #移动文件
         print("copy %s -> %s"%( srcfile,dstfile))
+        print("aaa")
 
 if __name__ == '__main__':
     path = 'E:\\PyProgramPack\\Test.py'
     ftype = filetype.guess(path)
     print(ftype)
     allFileNum = 0
-
+    print(os.path.abspath("Test.py"))
     CopyFile("E:\\程序目录\\第二模块练习\\PyInstaller打包工具.py","E:\\PyProgramPack")
 
 
