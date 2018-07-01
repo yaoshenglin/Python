@@ -21,6 +21,7 @@ def CopyFile(srcfile,dstfile):
             os.makedirs(fpath)                #如果不存在，则创建路径
         shutil.copy(srcfile,dstfile)          #移动文件
         print("copy %s -> %s"%( srcfile,dstfile))
+        print("aaa")
 
 if __name__ == '__main__':
     path = 'E:\\PyProgramPack\\Test.py'
