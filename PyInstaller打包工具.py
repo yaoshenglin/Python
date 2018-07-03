@@ -51,12 +51,11 @@ class FileDrop(wx.FileDropTarget):
 class ButtonFrame(wx.Frame):
     def __init__(self,master=None):
         wx.Frame.__init__(self, None, -1, 'PyInstaller打包工具', size=(350, 500))
-        self.Bind(wx.EVT_CLOSE, self.OnClose)
+        # self.Bind(wx.EVT_CLOSE, self.OnClose)
 
         panel = wx.Panel(self, -1)
 
         self.p = None
-        self.t = None
         self.label1 = wx.StaticText(panel, -1, '文件路径', pos=(100, 60), size=wx.DefaultSize)
         self.label2 = wx.StaticText(panel, -1, '', pos=(100, 30), size=wx.DefaultSize)
         self.label3 = wx.StaticText(panel, -1, '', pos=(100, 30), size=wx.DefaultSize)
@@ -112,14 +111,14 @@ class ButtonFrame(wx.Frame):
             strCommand = "cd "+tDrive+" && "+"cd "+fileDir+" && "+strCommand    # 组合命令
             # self.ExecuteCommand(strCommand)
             self.textOut.Show(True)
-            t = threading.Thread(target=self.ExecuteCommand, args=(strCommand,))
+            t = threading.Thread(target=self.ExecuteCommand, args=(strCommand,""))
             t.start()
             # t.join(15)
-    def ExecuteCommand(self, strCommand):
+    def ExecuteCommand(self, strCommand, args):
         # return_code = os.system(strCommand)  # 执行shell命令
         # self.textOut.SetLabelText("")
         # self.textOut.Show(True)
-        p = subprocess.Popen(strCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        p = subprocess.Popen(strCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,cwd=args)
         print("开始任务")
         self.p = p
         while p.poll() == None:
@@ -136,7 +135,12 @@ class ButtonFrame(wx.Frame):
 
                 if len(self.textOut.GetValue()) > 0 :
                     s = "\n" + s
-                self.textOut.AppendText(s)
+                # self.textOut.AppendText(s)
+                if len(s) > 0:
+                    wx.CallAfter(self.UpdateUI, UI="textOut", content=s)
+                else:
+                    wx.CallAfter(self.UpdateUI, UI="textOut", content="*****")
+                # sleep(0.1)
 
         return_code = p.returncode
         p.terminate()
@@ -148,21 +152,30 @@ class ButtonFrame(wx.Frame):
         print("操作返回错误代号：%d" % return_code)
         print("结束任务")
 
-        self.button.Enable()
-        self.textCtrl.Enable()
+        # self.button.Enable()
+        # self.textCtrl.Enable()
+        wx.CallAfter(self.UpdateUI, UI="button", content="Enable")
 
         if return_code == 0:
-            # self.textOut.AppendText("\n操作完成")
-            self.ShowMessage("操作完成")
+            wx.CallAfter(self.UpdateUI, UI="textOut", content="\n操作完成")
+            wx.CallAfter(self.UpdateUI, UI="ShowMessage", content="操作完成")
+            # self.ShowMessage("操作完成")
         else:
-            # self.textOut.AppendText("\n操作失败")
-            self.ShowMessage("操作失败")
+            # wx.CallAfter(self.UpdateUI, content="\n操作失败")
+            wx.CallAfter(self.UpdateUI, UI="textOut", content="\n操作失败")
+            wx.CallAfter(self.UpdateUI, UI="ShowMessage", content="操作失败")
+            # self.ShowMessage("操作失败")
 
-    def UpdateUI(self, object, content):
-        tr = threading.main_thread()
-        tr.start()
-        if object == self.textOut:
-            self.textOut.AppendText(content)
+    def UpdateUI(self, **kwargs):
+        sUI = kwargs["UI"]
+        s = kwargs["content"]
+        if sUI == "textOut" :
+            self.textOut.AppendText(s)
+        elif sUI == "button":
+            self.button.Enable()
+            self.textCtrl.Enable()
+        elif sUI == "ShowMessage":
+            self.ShowMessage(s)
 
     def ShowMessage(self, content):
         wx.MessageBox(content, "提示", wx.OK | wx.ICON_INFORMATION)

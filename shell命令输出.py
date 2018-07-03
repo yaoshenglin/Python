@@ -22,17 +22,20 @@ import subprocess
 if __name__ == '__main__':
     # shell_cmd = 'python3 subprogram.py'
     print(shell_cmd)
-    p = subprocess.Popen(shell_cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    # p = subprocess.Popen(shell_cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    r = os.popen(shell_cmd, 'r', 1)
+    print(r.read())
+    print(r.readlines())
     # out, err = p.communicate()
     # print(out)
-    while p.poll() is None:
-        line = p.stdout.readline()
-        line = line.strip() # 去掉一些特殊字符
-        if line:
-            print(line.decode("gbk"))
-            # print('{}'.format(line.decode("gbk")))
-    if p.returncode == 0:
-        print('Subprogram success')
-    else:
-        print('Subprogram failed')
+    # while p.poll() is None:
+    #     line = p.stdout.readline()
+    #     line = line.strip() # 去掉一些特殊字符
+    #     if line:
+    #         print(line.decode("gbk"))
+    #         # print('{}'.format(line.decode("gbk")))
+    # if p.returncode == 0:
+    #     print('Subprogram success')
+    # else:
+    #     print('Subprogram failed')
 
