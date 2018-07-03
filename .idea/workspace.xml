@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="60344b4e-1b1e-4439-8333-3733568a3404" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/YSL_PC.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PyInstaller打包工具.py" beforeDir="false" afterPath="$PROJECT_DIR$/PyInstaller打包工具.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,8 +35,8 @@
       <file leaf-file-name="Test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+            <state relative-caret-position="702">
+              <caret line="26" column="32" lean-forward="true" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
               <folding>
                 <element signature="e#1#10#0" expanded="true" />
               </folding>
@@ -68,8 +68,8 @@
       <file leaf-file-name="PyInstaller打包工具.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PyInstaller打包工具.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1458">
-              <caret line="135" column="46" lean-forward="true" selection-start-line="135" selection-start-column="46" selection-end-line="135" selection-end-column="46" />
+            <state relative-caret-position="378">
+              <caret line="122" column="40" lean-forward="true" selection-start-line="122" selection-start-column="40" selection-end-line="122" selection-end-column="40" />
               <folding>
                 <element signature="e#25#34#0" expanded="true" />
               </folding>
@@ -159,7 +159,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="149" />
     <option name="y" value="20" />
     <option name="width" value="1504" />
@@ -574,7 +574,14 @@
       <option name="project" value="LOCAL" />
       <updated>1530581459116</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="优化shell操作">
+      <created>1530606384594</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1530606384594</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -637,7 +644,8 @@
     <MESSAGE value="这是什么东西" />
     <MESSAGE value="Merge branch 'master' of https://github.com/yaoshenglin/Python&#10;&#10;# Conflicts:&#10;#&#9;Test.py" />
     <MESSAGE value="CallAfter" />
-    <option name="LAST_COMMIT_MESSAGE" value="CallAfter" />
+    <MESSAGE value="优化shell操作" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化shell操作" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -970,8 +978,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+        <state relative-caret-position="702">
+          <caret line="26" column="32" lean-forward="true" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
           <folding>
             <element signature="e#1#10#0" expanded="true" />
           </folding>
@@ -980,8 +988,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PyInstaller打包工具.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1458">
-          <caret line="135" column="46" lean-forward="true" selection-start-line="135" selection-start-column="46" selection-end-line="135" selection-end-column="46" />
+        <state relative-caret-position="378">
+          <caret line="122" column="40" lean-forward="true" selection-start-line="122" selection-start-column="40" selection-end-line="122" selection-end-column="40" />
           <folding>
             <element signature="e#25#34#0" expanded="true" />
           </folding>
