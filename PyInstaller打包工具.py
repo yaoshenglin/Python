@@ -105,72 +105,69 @@ class ButtonFrame(wx.Frame):
             self.textCtrl.Disable()
             strCommand = "pyinstaller -F -w %s"%fileName
             tDrive = strPath.split("\\")[0] # 获得磁盘盘符
-            # os.system("cd "+tDrive)
-            # os.system("cd "+fileDir)
             # python pyinstaller.py - -version - file = file_version_info.txt - -icon = ico.ico - -onefile - -windowed target.py
             strCommand = "cd "+tDrive+" && "+"cd "+fileDir+" && "+strCommand    # 组合命令
             # self.ExecuteCommand(strCommand)
-            self.textOut.Show(True)
-            t = threading.Thread(target=self.ExecuteCommand, args=(strCommand,""))
+            # self.textOut.Show(True)
+            t = threading.Thread(target=self.ExecuteCommand, args=(strCommand,))
             t.start()
             # t.join(15)
-    def ExecuteCommand(self, strCommand, args):
-        # return_code = os.system(strCommand)  # 执行shell命令
-        # self.textOut.SetLabelText("")
-        # self.textOut.Show(True)
-        p = subprocess.Popen(strCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,cwd=args)
-        print("开始任务")
-        self.p = p
-        while p.poll() == None:
-            line = p.stdout.readline()
-            line = line.strip()
-            if line:
-                # 去掉一些特殊字符
-                tEncode = chardet.detect(line)["encoding"]
-                if tEncode == "GB2312":
-                    s = line.decode("gbk")
-                elif len(tEncode) > 0:
-                    s = line.decode("utf8")
-                # print(tEncode)
+    def ExecuteCommand(self, strCommand):
+        return_code = os.system(strCommand)  # 执行shell命令
 
-                if len(self.textOut.GetValue()) > 0 :
-                    s = "\n" + s
-                # self.textOut.AppendText(s)
-                if len(s) > 0:
-                    wx.CallAfter(self.UpdateUI, UI="textOut", content=s)
-                else:
-                    wx.CallAfter(self.UpdateUI, UI="textOut", content="*****")
-                # sleep(0.1)
-
-        return_code = p.returncode
-        p.terminate()
-        p.kill()
+        # wx.CallAfter(self.UpdateUI, UI="textOut", content=True)
+        # p = subprocess.Popen(strCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        # print("开始任务")
+        # self.p = p
+        # while p.poll() == None:
+        #     line = p.stdout.readline()
+        #     line = line.strip()
+        #     if line:
+        #         # 去掉一些特殊字符
+        #         tEncode = chardet.detect(line)["encoding"]
+        #         if tEncode == "GB2312":
+        #             s = line.decode("gbk")
+        #         elif len(tEncode) > 0:
+        #             s = line.decode("utf8")
+        #         # print(tEncode)
+        #
+        #         if len(self.textOut.GetValue()) > 0 :
+        #             s = "\n" + s
+        #         # self.textOut.AppendText(s)
+        #         if len(s) > 0:
+        #             wx.CallAfter(self.UpdateUI, UI="textOut", content=s)
+        #         else:
+        #             wx.CallAfter(self.UpdateUI, UI="textOut", content="*****")
+        #         # sleep(0.1)
+        #
+        # return_code = p.returncode
+        # p.terminate()
+        # p.kill()
         # print(os.getcwd())  #获取操作所在路径
         # print(sys.path[0])
         # print(os.path.split(os.path.realpath(__file__))[0])
         # print(strCommand)  # 输出操作所执行命令
         print("操作返回错误代号：%d" % return_code)
+        wx.CallAfter(self.UpdateUI, UI="textOut", content="\n操作返回代号：%d" % return_code)
         print("结束任务")
 
-        # self.button.Enable()
-        # self.textCtrl.Enable()
         wx.CallAfter(self.UpdateUI, UI="button", content="Enable")
 
         if return_code == 0:
             wx.CallAfter(self.UpdateUI, UI="textOut", content="\n操作完成")
             wx.CallAfter(self.UpdateUI, UI="ShowMessage", content="操作完成")
-            # self.ShowMessage("操作完成")
         else:
-            # wx.CallAfter(self.UpdateUI, content="\n操作失败")
             wx.CallAfter(self.UpdateUI, UI="textOut", content="\n操作失败")
             wx.CallAfter(self.UpdateUI, UI="ShowMessage", content="操作失败")
-            # self.ShowMessage("操作失败")
 
     def UpdateUI(self, **kwargs):
         sUI = kwargs["UI"]
         s = kwargs["content"]
         if sUI == "textOut" :
-            self.textOut.AppendText(s)
+            if s == True:
+                self.textOut.Show(True)
+            else:
+                self.textOut.AppendText(s)
         elif sUI == "button":
             self.button.Enable()
             self.textCtrl.Enable()
@@ -180,9 +177,9 @@ class ButtonFrame(wx.Frame):
     def ShowMessage(self, content):
         wx.MessageBox(content, "提示", wx.OK | wx.ICON_INFORMATION)
         strPath = self.textCtrl.GetValue()
+        self.textOut.Disable()
         if content == "操作失败" :
             excuPath = os.getcwd()
-            # strPath = excuPath + "\\" + os.path.split(strPath)[1]
             strPath = os.path.join( excuPath, os.path.basename(strPath) )
             f = open(file=excuPath+"\\executePath.txt", mode='w', encoding="utf-8")
             f.write(excuPath)
@@ -190,13 +187,9 @@ class ButtonFrame(wx.Frame):
             f.write("\n" + strPath)
             f.close()
         fileDir, fileName = os.path.split(strPath)
-        # path1 = fileDir + "\\" + "__pycache__"
         path1 = os.path.join(fileDir, "__pycache__")
-        # path2 = fileDir + "\\" + "build"
         path2 = os.path.join(fileDir, "build")
-        # path3 = fileDir + "\\" + os.path.splitext(fileName)[0] + ".spec"
         path3 = os.path.join(fileDir, os.path.splitext(fileName)[0] + ".spec")
-        # path4 = fileDir + "\\dist\\" + os.path.splitext(fileName)[0] + ".exe"
         path4 = os.path.join(fileDir, "dist", os.path.splitext(fileName)[0] + ".exe")
         MoveFile(path4, fileDir)
         path4 = os.path.join(fileDir, "dist")
