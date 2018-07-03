@@ -103,7 +103,7 @@ class ButtonFrame(wx.Frame):
         else:
             self.button.Disable()
             self.textCtrl.Disable()
-            strCommand = "pyinstaller -F -w %s"%fileName
+            strCommand = "pyinstaller -F -w --version-file=file_version_info.txt -i tubiao\\bitbug_favicon.ico %s"%fileName
             tDrive = strPath.split("\\")[0] # 获得磁盘盘符
             # python pyinstaller.py - -version - file = file_version_info.txt - -icon = ico.ico - -onefile - -windowed target.py
             strCommand = "cd "+tDrive+" && "+"cd "+fileDir+" && "+strCommand    # 组合命令
