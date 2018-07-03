@@ -51,7 +51,7 @@ class FileDrop(wx.FileDropTarget):
 class ButtonFrame(wx.Frame):
     def __init__(self,master=None):
         wx.Frame.__init__(self, None, -1, 'PyInstaller打包工具', size=(350, 500))
-        # self.Bind(wx.EVT_CLOSE, self.OnClose)
+        self.Bind(wx.EVT_CLOSE, self.OnClose)
 
         panel = wx.Panel(self, -1)
 
@@ -157,8 +157,8 @@ class ButtonFrame(wx.Frame):
             wx.CallAfter(self.UpdateUI, UI="textOut", content="\n操作完成")
             wx.CallAfter(self.UpdateUI, UI="ShowMessage", content="操作完成")
         else:
-            wx.CallAfter(self.UpdateUI, UI="textOut", content="\n操作失败")
-            wx.CallAfter(self.UpdateUI, UI="ShowMessage", content="操作失败")
+            wx.CallAfter(self.UpdateUI, UI="textOut", content="\n操作失败，错误码：%d"%return_code)
+            wx.CallAfter(self.UpdateUI, UI="ShowMessage", content="操作失败，错误码：%d"%return_code)
 
     def UpdateUI(self, **kwargs):
         sUI = kwargs["UI"]
@@ -202,7 +202,7 @@ class ButtonFrame(wx.Frame):
         ret = wx.MessageBox('Do you really want to leave?', '提示', wx.OK | wx.CANCEL)
         if ret == wx.OK:
             # do something here...
-            if self.p.poll() == None :
+            if self.p != None and self.p.poll() == None :
                 self.p.terminate()
                 self.p.kill()
                 print("终止shell进程")
