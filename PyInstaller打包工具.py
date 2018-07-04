@@ -56,6 +56,7 @@ class ButtonFrame(wx.Frame):
         panel = wx.Panel(self, -1)
 
         self.p = None
+        self.isEndTask = True
         self.label1 = wx.StaticText(panel, -1, '文件路径', pos=(100, 60), size=wx.DefaultSize)
         self.label2 = wx.StaticText(panel, -1, '', pos=(100, 30), size=wx.DefaultSize)
         self.label3 = wx.StaticText(panel, -1, '', pos=(100, 30), size=wx.DefaultSize)
@@ -111,9 +112,11 @@ class ButtonFrame(wx.Frame):
             # self.ExecuteCommand(strCommand)
             # self.textOut.Show(True)
             t = threading.Thread(target=self.ExecuteCommand, args=(strCommand,))
+            t.setDaemon(True)   # 设置为守护线程
             t.start()
-            # t.join(15)
+            # t.join(15)    # 进行线程同步，会阻塞主线程
     def ExecuteCommand(self, strCommand):
+        self.isEndTask = False
         return_code = os.system(strCommand)  # 执行shell命令
 
         # wx.CallAfter(self.UpdateUI, UI="textOut", content=True)
@@ -150,6 +153,7 @@ class ButtonFrame(wx.Frame):
         # print(strCommand)  # 输出操作所执行命令
         print("操作返回错误代号：%d" % return_code)
         wx.CallAfter(self.UpdateUI, UI="textOut", content="\n操作返回代号：%d" % return_code)
+        self.isEndTask = True
         print("结束任务")
 
         wx.CallAfter(self.UpdateUI, UI="button", content="Enable")
@@ -200,18 +204,20 @@ class ButtonFrame(wx.Frame):
             DeleteFile(path)
 
     def OnClose(self, evt):
-        ret = wx.MessageBox('Do you really want to leave?', '提示', wx.OK | wx.CANCEL)
-        if ret == wx.OK:
-            # do something here...
-            if self.p != None and self.p.poll() == None :
-                self.p.terminate()
-                self.p.kill()
-                print("终止shell进程")
-                # exit(0)
-                # self.t.setDaemon(True)
-            evt.Skip()
-        print("终止全部进程")
-        # exit(0)
+        if not self.isEndTask:
+            ret = wx.MessageBox('任务还没有结束，你确定要退出?', '提示', wx.OK | wx.CANCEL)
+            if ret == wx.OK:
+                # do something here...
+                if self.p != None and self.p.poll() == None :
+                    self.p.terminate()
+                    self.p.kill()
+                    print("终止shell进程")
+                    # exit(0)
+                    # self.t.setDaemon(True)
+                # evt.Skip()
+            print("终止全部进程")
+            # exit(0)
+        evt.Skip()
 
 
 if __name__ == '__main__':
