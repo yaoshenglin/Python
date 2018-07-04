@@ -3,9 +3,11 @@ import os
 import sys
 import filetype
 import shutil
+import re
+import string
 
 strPath = "E:\\PyProgramPack\\魔兽争霸ID互转工具.py"
-strPath = "E:\\PyProgramPack\\Test.py"
+strPath = "E:\PyProgramPack\\Test.py"
 
 
 def CopyFile(srcfile,dstfile):
@@ -28,7 +30,10 @@ if __name__ == '__main__':
     print(ftype)
     allFileNum = 0
     print(os.path.abspath("Test.py"))
-    CopyFile("E:\\程序目录\\第二模块练习\\PyInstaller打包工具.py","E:\\PyProgramPack")
+    # CopyFile("E:\\程序目录\\第二模块练习\\PyInstaller打包工具.py","E:\\PyProgramPack")
+
+    listCommon = ['E:','cd '+os.path.dirname(strPath),'strCommand']
+    print(' & '.join(listCommon))
 
 
 
