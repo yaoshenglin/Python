@@ -219,9 +219,11 @@ class ButtonFrame(wx.Frame):
             # exit(0)
         evt.Skip()
 
-
-if __name__ == '__main__':
+def main():
     app = wx.App()
     frame = ButtonFrame()
     frame.Show()
     app.MainLoop()
+
+if __name__ == '__main__':
+    main()
