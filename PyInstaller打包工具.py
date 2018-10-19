@@ -49,7 +49,7 @@ class FileDrop(wx.FileDropTarget):
         return 0
 
 class ButtonFrame(wx.Frame):
-    def __init__(self,master=None):
+    def __init__(self):
         wx.Frame.__init__(self, None, -1, 'PyInstaller打包工具', size=(350, 500))
         self.Bind(wx.EVT_CLOSE, self.OnClose)
 
@@ -111,6 +111,7 @@ class ButtonFrame(wx.Frame):
             strCommand = " && ".join(listCommand)    # 组合命令
             # self.ExecuteCommand(strCommand)
             # self.textOut.Show(True)
+            # strCommand = 'echo E:\PyProgramPack>test.txt'   # 测试命令的有效性
             t = threading.Thread(target=self.ExecuteCommand, args=(strCommand,))
             t.setDaemon(True)   # 设置为守护线程
             t.start()

@@ -246,7 +246,8 @@ def update(command):     #修改和更新员工记录函数
 if __name__=='__main__':     #主函数，数据库指令输入和执行
     dictInfo = {}
     path = os.path.abspath("用户信息.txt")
-    if os.path.exists(path) : dictInfo = readFile(path)
+    if os.path.exists(path) :
+        dictInfo = readFile(path)
     while(True):
         command=input("请按语法输入数据库操作指令：")    #指令输入
         if command=='exit':
